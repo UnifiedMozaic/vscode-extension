@@ -1,3 +1,18 @@
+# UnifiedMozaic for Visual Studio Code
+
+Language support for [UnifiedMozaic](https://github.com/UnifiedMozaic/UnifiedMozaic) (`.um`), a TypeScript-flavoured language that compiles to native code and WebAssembly, with CPU and GPU code in one source.
+
+- Syntax highlighting, snippets and an outline
+- Type checking on open and save (errors and hints in the Problems panel)
+- Build and run with F5 (native, or with Metal on a Mac)
+- View the generated LLVM IR and the MSL of each kernel
+
+**Requirements:** this extension calls the UnifiedMozaic compiler, which is not bundled. Clone [UnifiedMozaic](https://github.com/UnifiedMozaic/UnifiedMozaic) and set `unifiedmozaic.compilerPath` to that folder (or put it next to your project folder as `UnifiedMozaic`). The compiler needs Node.js 22.18 or later and `clang`.
+
+The rest of this page is in Japanese.
+
+---
+
 # UnifiedMozaic の VSCode 拡張
 
 [UnifiedMozaic](https://github.com/UnifiedMozaic/UnifiedMozaic) の `.um` のファイルを VSCode で書くための拡張。npm の依存はなく、コンパイラ（UnifiedMozaic のリポジトリの `src/cli.ts`）を node で呼ぶ。
@@ -18,7 +33,9 @@
 
 ## 入れ方
 
-コンパイラとこのリポジトリを同じフォルダに並べて clone し、このリポジトリを VSCode の拡張のフォルダにリンクして、VSCode を再読み込みする（「Developer: Reload Window」）。
+Marketplace から入れる場合は、コンパイラ（UnifiedMozaic のリポジトリ）を clone して、設定の `unifiedmozaic.compilerPath` にその場所を書く。
+
+開発版をリンクで入れる場合は、コンパイラとこのリポジトリを同じフォルダに並べて clone し、このリポジトリを VSCode の拡張のフォルダにリンクして、VSCode を再読み込みする（「Developer: Reload Window」）。
 
 ```sh
 git clone https://github.com/UnifiedMozaic/UnifiedMozaic.git

@@ -1,21 +1,41 @@
 {
   "name": "unifiedmozaic",
   "displayName": "UnifiedMozaic",
-  "description": "UnifiedMozaic（.um）の色分け・保存時の型検査・ビルドと実行",
+  "description": "UnifiedMozaic (.um) language support: syntax highlighting, type checking on save, build and run (native / Metal), LLVM IR and MSL views",
   "version": "0.1.0",
   "publisher": "ofutonmizuki",
-  "private": true,
   "license": "MIT OR Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/UnifiedMozaic/vscode-extension.git"
   },
+  "homepage": "https://github.com/UnifiedMozaic/vscode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/UnifiedMozaic/vscode-extension/issues"
+  },
   "icon": "icons/icon.png",
+  "galleryBanner": {
+    "color": "#000000",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
     "Programming Languages"
+  ],
+  "keywords": [
+    "UnifiedMozaic",
+    "um",
+    ".um",
+    "gpu",
+    "metal",
+    "msl",
+    "kernel",
+    "llvm",
+    "webassembly",
+    "compiler",
+    "language"
   ],
   "main": "./extension.js",
   "activationEvents": [],
@@ -126,7 +146,7 @@
         "unifiedmozaic.compilerPath": {
           "type": "string",
           "default": "",
-          "description": "コンパイラの場所（UnifiedMozaic のリポジトリのフォルダか src/cli.ts）。空なら UM_DIR、開いているフォルダ、拡張の置き場所（このリポジトリの editors/vscode）の順に探す。"
+          "description": "コンパイラの場所（UnifiedMozaic のリポジトリのフォルダか src/cli.ts）。空なら UM_DIR、開いているフォルダ（とその隣の UnifiedMozaic）、拡張の実体の隣の UnifiedMozaic の順に探す。"
         },
         "unifiedmozaic.nodePath": {
           "type": "string",

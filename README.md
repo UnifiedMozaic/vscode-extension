@@ -40,7 +40,7 @@ Marketplace から入れる場合は、コンパイラ（UnifiedMozaic のリポ
 ```sh
 git clone https://github.com/UnifiedMozaic/UnifiedMozaic.git
 git clone https://github.com/UnifiedMozaic/vscode-extension.git
-ln -sfn "$PWD/vscode-extension" ~/.vscode/extensions/ofutonmizuki.unifiedmozaic-0.1.0
+ln -sfn "$PWD/vscode-extension" ~/.vscode/extensions/unifiedmozaic.unifiedmozaic-0.1.0
 ```
 
 リンクで入れると、拡張の実体の隣にある `UnifiedMozaic` のコンパイラを自動で使う。拡張のファイルを変えたら再読み込みすれば反映される。

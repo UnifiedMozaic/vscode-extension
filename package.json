@@ -3,7 +3,7 @@
   "displayName": "UnifiedMozaic",
   "description": "UnifiedMozaic (.um) language support: syntax highlighting, type checking on save, build and run (native / Metal), LLVM IR and MSL views",
   "version": "0.1.0",
-  "publisher": "ofutonmizuki",
+  "publisher": "unifiedmozaic",
   "license": "MIT OR Apache-2.0",
   "repository": {
     "type": "git",

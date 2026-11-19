@@ -1,0 +1,189 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "UnifiedMozaic",
+  "scopeName": "source.unifiedmozaic",
+  "fileTypes": ["um"],
+  "patterns": [{ "include": "#code" }],
+  "repository": {
+    "code": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#declarations" },
+        { "include": "#keywords" },
+        { "include": "#types" },
+        { "include": "#builtins" },
+        { "include": "#calls" },
+        { "include": "#operators" },
+        { "include": "#braces" }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.directive.unifiedmozaic",
+          "match": "^\\s*(//)\\s*(expect|stdin|args|env)(:)(.*)$",
+          "captures": {
+            "1": { "name": "punctuation.definition.comment.unifiedmozaic" },
+            "2": { "name": "keyword.other.directive.unifiedmozaic" },
+            "3": { "name": "punctuation.separator.unifiedmozaic" }
+          }
+        },
+        {
+          "name": "comment.line.double-slash.unifiedmozaic",
+          "begin": "//",
+          "end": "$",
+          "beginCaptures": { "0": { "name": "punctuation.definition.comment.unifiedmozaic" } }
+        },
+        {
+          "name": "comment.block.unifiedmozaic",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": { "0": { "name": "punctuation.definition.comment.unifiedmozaic" } }
+        }
+      ]
+    },
+    "escapes": {
+      "patterns": [
+        { "name": "constant.character.escape.unifiedmozaic", "match": "\\\\(?:[ntr0\\\\'\"`$]|x[0-9a-fA-F]{2}|u\\{[0-9a-fA-F]{1,6}\\}|u[0-9a-fA-F]{4})" },
+        { "name": "invalid.illegal.escape.unifiedmozaic", "match": "\\\\." }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.unifiedmozaic",
+          "begin": "\"",
+          "end": "\"|$",
+          "patterns": [{ "include": "#escapes" }]
+        },
+        {
+          "name": "string.quoted.single.unifiedmozaic",
+          "begin": "'",
+          "end": "'|$",
+          "patterns": [{ "include": "#escapes" }]
+        },
+        {
+          "name": "string.template.unifiedmozaic",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            { "include": "#escapes" },
+            {
+              "name": "meta.template.expression.unifiedmozaic",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "beginCaptures": { "0": { "name": "punctuation.definition.template-expression.begin.unifiedmozaic" } },
+              "endCaptures": { "0": { "name": "punctuation.definition.template-expression.end.unifiedmozaic" } },
+              "contentName": "meta.embedded.line.unifiedmozaic",
+              "patterns": [{ "include": "#code" }]
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.hex.unifiedmozaic", "match": "\\b0[xX][0-9a-fA-F_]+\\b" },
+        { "name": "constant.numeric.binary.unifiedmozaic", "match": "\\b0[bB][01_]+\\b" },
+        { "name": "constant.numeric.decimal.unifiedmozaic", "match": "\\b[0-9][0-9_]*(?:\\.[0-9][0-9_]*)?(?:[eE][+-]?[0-9]+)?\\b" }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "match": "\\b(kernel)\\s+(function)\\s+([A-Za-z_$][\\w$]*)",
+          "captures": {
+            "1": { "name": "storage.modifier.kernel.unifiedmozaic" },
+            "2": { "name": "storage.type.function.unifiedmozaic" },
+            "3": { "name": "entity.name.function.kernel.unifiedmozaic" }
+          }
+        },
+        {
+          "match": "\\b(function)\\s+([A-Za-z_$][\\w$]*)",
+          "captures": {
+            "1": { "name": "storage.type.function.unifiedmozaic" },
+            "2": { "name": "entity.name.function.unifiedmozaic" }
+          }
+        },
+        {
+          "match": "\\b(struct|class|interface|enum)\\s+([A-Za-z_$][\\w$]*)",
+          "captures": {
+            "1": { "name": "storage.type.$1.unifiedmozaic" },
+            "2": { "name": "entity.name.type.unifiedmozaic" }
+          }
+        },
+        {
+          "match": "\\b(let|const)\\s+([A-Za-z_$][\\w$]*)",
+          "captures": {
+            "1": { "name": "storage.type.unifiedmozaic" },
+            "2": { "name": "variable.other.declaration.unifiedmozaic" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        { "name": "keyword.control.unifiedmozaic", "match": "\\b(if|else|while|for|do|return|break|continue|switch|case|default|match|of|in)\\b" },
+        { "name": "keyword.control.import.unifiedmozaic", "match": "\\b(import|export|from)\\b" },
+        { "name": "storage.type.unifiedmozaic", "match": "\\b(let|const|function|struct|class|interface|enum|constructor)\\b" },
+        { "name": "storage.modifier.unifiedmozaic", "match": "\\b(kernel|static|private|public|readonly|extends|implements)\\b" },
+        { "name": "storage.modifier.borrow.unifiedmozaic", "match": "\\b(mut|own)\\b" },
+        { "name": "keyword.operator.expression.unifiedmozaic", "match": "\\b(as|new)\\b" },
+        { "name": "variable.language.this.unifiedmozaic", "match": "\\bthis\\b" },
+        { "name": "constant.language.boolean.unifiedmozaic", "match": "\\b(true|false)\\b" },
+        { "name": "constant.language.null.unifiedmozaic", "match": "\\b(null|undefined)\\b" }
+      ]
+    },
+    "types": {
+      "patterns": [
+        { "name": "support.type.primitive.unifiedmozaic", "match": "\\b(i8|i16|i32|i64|u8|u16|u32|u64|usize|f4|f8|f16|f32|f64|bool|void|string)\\b" },
+        { "name": "support.type.simd.unifiedmozaic", "match": "\\b(i8x16|u8x16|i16x8|u16x8|i32x4|u32x4|f32x4)\\b" },
+        { "name": "support.type.builtin.unifiedmozaic", "match": "\\b(Buffer|RacyBuffer|Array)\\b" },
+        { "name": "entity.name.type.unifiedmozaic", "match": "\\b[A-Z][\\w$]*\\b(?=\\s*(?:<|\\[|\\{|>|,|\\)|;|=|\\||\\?|$))" }
+      ]
+    },
+    "builtins": {
+      "patterns": [
+        {
+          "match": "\\b(gpu|Math|thread)\\s*(\\.)\\s*([A-Za-z_$][\\w$]*)",
+          "captures": {
+            "1": { "name": "support.class.builtin.unifiedmozaic" },
+            "2": { "name": "punctuation.accessor.unifiedmozaic" },
+            "3": { "name": "support.function.builtin.unifiedmozaic" }
+          }
+        },
+        { "name": "support.function.builtin.unifiedmozaic", "match": "\\b(print|dispatch|dispatchGroups|String)\\b(?=\\s*\\()" }
+      ]
+    },
+    "calls": {
+      "patterns": [
+        {
+          "match": "([A-Za-z_$][\\w$]*)\\s*(?=(?:<[^<>()]*>)?\\s*\\()",
+          "captures": { "1": { "name": "entity.name.function.call.unifiedmozaic" } }
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.arrow.unifiedmozaic", "match": "=>" },
+        { "name": "keyword.operator.comparison.unifiedmozaic", "match": "===|!==|==|!=|<=|>=" },
+        { "name": "keyword.operator.assignment.compound.unifiedmozaic", "match": "<<=|>>=|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=" },
+        { "name": "keyword.operator.logical.unifiedmozaic", "match": "&&|\\|\\||\\?\\?|!" },
+        { "name": "keyword.operator.bitwise.unifiedmozaic", "match": "<<|>>|&|\\||\\^|~" },
+        { "name": "keyword.operator.increment.unifiedmozaic", "match": "\\+\\+|--" },
+        { "name": "keyword.operator.arithmetic.unifiedmozaic", "match": "[+\\-*/%]" },
+        { "name": "keyword.operator.assignment.unifiedmozaic", "match": "=" },
+        { "name": "keyword.operator.spread.unifiedmozaic", "match": "\\.\\.\\." }
+      ]
+    },
+    "braces": {
+      "patterns": [
+        { "name": "punctuation.terminator.statement.unifiedmozaic", "match": ";" },
+        { "name": "punctuation.separator.comma.unifiedmozaic", "match": "," },
+        { "name": "punctuation.accessor.unifiedmozaic", "match": "\\." }
+      ]
+    }
+  }
+}

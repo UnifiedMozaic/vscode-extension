@@ -1,0 +1,59 @@
+{
+  "main": {
+    "prefix": "main",
+    "body": ["export function main(): i32 {", "\t$0", "\treturn 0;", "}"],
+    "description": "入口の main 関数"
+  },
+  "kernel": {
+    "prefix": "kernel",
+    "body": [
+      "kernel function ${1:name}(i: u32, out: mut Buffer<${2:f32}>, src: Buffer<${2:f32}>): void {",
+      "\tout[i] = src[i]$0;",
+      "}"
+    ],
+    "description": "要素ごとに走る kernel 関数"
+  },
+  "dispatch": {
+    "prefix": "dispatch",
+    "body": ["dispatch(${1:kernel}, ${2:n}, mut ${3:out}, ${4:src});"],
+    "description": "kernel を n 個並べて実行（同期）"
+  },
+  "submit": {
+    "prefix": "submit",
+    "body": [
+      "const ${1:t} = gpu.submit(${2:kernel}, ${3:n}, mut ${4:out});",
+      "gpu.wait(${1:t});"
+    ],
+    "description": "非同期の gpu.submit と券の待ち"
+  },
+  "struct": {
+    "prefix": "struct",
+    "body": ["struct ${1:Name} {", "\t${2:x}: ${3:i32};", "}"],
+    "description": "struct の宣言"
+  },
+  "class": {
+    "prefix": "class",
+    "body": ["class ${1:Name} {", "\t${2:x}: ${3:i32};", "", "\tconstructor(${2:x}: ${3:i32}) {", "\t\tthis.${2:x} = ${2:x};", "\t}", "}"],
+    "description": "class の宣言"
+  },
+  "for": {
+    "prefix": "for",
+    "body": ["for (let ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {", "\t$0", "}"],
+    "description": "数える for"
+  },
+  "forof": {
+    "prefix": "forof",
+    "body": ["for (const ${1:x} of ${2:xs}) {", "\t$0", "}"],
+    "description": "要素を順に見る for ... of"
+  },
+  "match": {
+    "prefix": "match",
+    "body": ["match (${1:value}) {", "\t${2:Enum.Case} => {", "\t\t$0", "\t}", "}"],
+    "description": "match 式"
+  },
+  "import": {
+    "prefix": "import",
+    "body": ["import { ${2:name} } from \"./${1:file}.um\";"],
+    "description": "別のファイルから import"
+  }
+}

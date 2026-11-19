@@ -1,0 +1,171 @@
+{
+  "name": "unifiedmozaic",
+  "displayName": "UnifiedMozaic",
+  "description": "UnifiedMozaic（.um）の色分け・保存時の型検査・ビルドと実行",
+  "version": "0.1.0",
+  "publisher": "ofutonmizuki",
+  "private": true,
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UnifiedMozaic/vscode-extension.git"
+  },
+  "icon": "icons/icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "languages": [
+      {
+        "id": "unifiedmozaic",
+        "aliases": [
+          "UnifiedMozaic",
+          "um"
+        ],
+        "extensions": [
+          ".um"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/um-light.svg",
+          "dark": "./icons/um-dark.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "unifiedmozaic",
+        "scopeName": "source.unifiedmozaic",
+        "path": "./syntaxes/unifiedmozaic.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "unifiedmozaic",
+        "path": "./snippets.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "unifiedmozaic.check",
+        "title": "型検査",
+        "category": "UnifiedMozaic"
+      },
+      {
+        "command": "unifiedmozaic.run",
+        "title": "ビルドして実行（ネイティブ）",
+        "category": "UnifiedMozaic"
+      },
+      {
+        "command": "unifiedmozaic.runMetal",
+        "title": "ビルドして実行（Metal）",
+        "category": "UnifiedMozaic"
+      },
+      {
+        "command": "unifiedmozaic.showLLVM",
+        "title": "LLVM IR を表示",
+        "category": "UnifiedMozaic"
+      },
+      {
+        "command": "unifiedmozaic.showMSL",
+        "title": "kernel の MSL を表示",
+        "category": "UnifiedMozaic"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "unifiedmozaic.run",
+          "when": "editorLangId == unifiedmozaic",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unifiedmozaic.runMetal",
+          "when": "editorLangId == unifiedmozaic && isMac",
+          "group": "navigation@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "unifiedmozaic.check",
+          "when": "editorLangId == unifiedmozaic"
+        },
+        {
+          "command": "unifiedmozaic.run",
+          "when": "editorLangId == unifiedmozaic"
+        },
+        {
+          "command": "unifiedmozaic.runMetal",
+          "when": "editorLangId == unifiedmozaic && isMac"
+        },
+        {
+          "command": "unifiedmozaic.showLLVM",
+          "when": "editorLangId == unifiedmozaic"
+        },
+        {
+          "command": "unifiedmozaic.showMSL",
+          "when": "editorLangId == unifiedmozaic"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "unifiedmozaic.run",
+        "key": "f5",
+        "when": "editorLangId == unifiedmozaic && !inDebugMode"
+      }
+    ],
+    "configuration": {
+      "title": "UnifiedMozaic",
+      "properties": {
+        "unifiedmozaic.compilerPath": {
+          "type": "string",
+          "default": "",
+          "description": "コンパイラの場所（UnifiedMozaic のリポジトリのフォルダか src/cli.ts）。空なら UM_DIR、開いているフォルダ、拡張の置き場所（このリポジトリの editors/vscode）の順に探す。"
+        },
+        "unifiedmozaic.nodePath": {
+          "type": "string",
+          "default": "",
+          "description": "node の実行ファイル（22.18 以上）。空なら PATH と /opt/homebrew/bin、/usr/local/bin から探す。"
+        },
+        "unifiedmozaic.checkOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "開いたときと保存したときに型検査して、エラーを問題パネルと波線に出す。"
+        },
+        "unifiedmozaic.checkTarget": {
+          "type": "string",
+          "enum": [
+            "host",
+            "wasm32",
+            "arm64-macos"
+          ],
+          "default": "host",
+          "description": "型検査に使う target（usize の幅などが変わる）。"
+        },
+        "unifiedmozaic.runArgs": {
+          "type": "string",
+          "default": "",
+          "description": "実行するときにプログラムへ渡す引数（シェルにそのまま書かれる）。"
+        },
+        "unifiedmozaic.runEnv": {
+          "type": "object",
+          "default": {},
+          "description": "実行するときに足す環境変数（例: {\"UM_GPU_STATS\": \"1\", \"UM_THREADS\": \"4\"}）。"
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[unifiedmozaic]": {
+        "editor.tabSize": 4,
+        "editor.indentSize": 4,
+        "editor.detectIndentation": false
+      }
+    }
+  }
+}
